@@ -47,9 +47,11 @@ class Bingo {
    */
   initialize = () => {
     $('.reach-cnt').text(0)
+    $('.try-cnt').text(0)
     $('.hit-cnt').text(0)
     $('.hit-rate').text(0)
     $('.text-bingo').text('')
+    $('#diced_numbers').text('')
     $('.btn-dice').attr('disabled', false)
 
     this.cur_count = 0
