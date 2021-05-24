@@ -118,39 +118,7 @@ class Bingo {
    * リーチの数を数える
    */
   countReach = () => {
-    let reached_count = 0
-    for (let row = 0; row < 5; row++) {
-      // 行
-      const row_total = this.hit_sheet[row].reduce((sum, element) => {
-        return sum + element;
-      }, 0);
-      if (row_total === 4) {
-        reached_count++
-      }
-
-      // 列
-      let col_total = 0
-      for (let col = 0; col < 5; col++) {
-        col_total += this.hit_sheet[col][row]
-      }
-      if (col_total === 4) {
-        reached_count++
-      }
-
-      // 斜め
-      let upper_left_count = 0
-      upper_left_count += this.hit_sheet[row][row]
-      if (upper_left_count === 4) {
-        reached_count++
-      }
-      let upper_right_count = 0
-      upper_right_count += this.hit_sheet[row][4 - row]
-      if (upper_right_count === 4) {
-        reached_count++
-      }
-    }
-
-    return reached_count;
+    return this.countLineSum(4);
   }
 
   /**
@@ -180,40 +148,7 @@ class Bingo {
    *
    */
   isBingo = () => {
-
-    let bingo_count = 0
-    for (let row = 0; row < 5; row++) {
-      // 行
-      const row_total = this.hit_sheet[row].reduce((sum, element) => {
-        return sum + element;
-      }, 0);
-      if (row_total === 5) {
-        bingo_count++
-      }
-
-      // 列
-      let col_total = 0
-      for (let col = 0; col < 5; col++) {
-        col_total += this.hit_sheet[col][row]
-      }
-      if (col_total === 5) {
-        bingo_count++
-      }
-
-      // 斜め
-      let upper_left_count = 0
-      upper_left_count += this.hit_sheet[row][row]
-      if (upper_left_count === 5) {
-        bingo_count++
-      }
-      let upper_right_count = 0
-      upper_right_count += this.hit_sheet[row][4 - row]
-      if (upper_right_count === 5) {
-        bingo_count++
-      }
-    }
-
-    return bingo_count > 0;
+    return this.countLineSum(5) > 0;
   }
 
   judgeBingo = () => {
@@ -262,5 +197,46 @@ class Bingo {
     const index = this.unselected_numbers.indexOf(num)
     this.unselected_numbers.splice(index, 1)
     this.selected_numbers.push(num)
+  }
+
+  /**
+   * 行・列・斜めの合計値が判定値かどうか判断する
+   * @param {number} judgeline 判定する限界値
+   * @returns number
+   */
+  countLineSum = (judgeline) => {
+    let reached_count = 0
+    for (let row = 0; row < 5; row++) {
+      // 行
+      const row_total = this.hit_sheet[row].reduce((sum, element) => {
+        return sum + element;
+      }, 0);
+      if (row_total === judgeline) {
+        reached_count++
+      }
+
+      // 列
+      let col_total = 0
+      for (let col = 0; col < 5; col++) {
+        col_total += this.hit_sheet[col][row]
+      }
+      if (col_total === judgeline) {
+        reached_count++
+      }
+
+      // 斜め
+      let upper_left_count = 0
+      upper_left_count += this.hit_sheet[row][row]
+      if (upper_left_count === judgeline) {
+        reached_count++
+      }
+      let upper_right_count = 0
+      upper_right_count += this.hit_sheet[row][4 - row]
+      if (upper_right_count === judgeline) {
+        reached_count++
+      }
+    }
+
+    return reached_count;
   }
 }
