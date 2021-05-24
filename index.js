@@ -57,18 +57,21 @@ class Bingo {
     this.cur_count = 0
     this.hit_count = 0
 
+    this.initializeUnselectedNumbers()
     this.initializeDashboard()
     $('table').removeClass('d-none')
     $('td').removeClass('bg-success')
   }
 
+  /**
+   *
+   */
   initializeDashboard = () => {
 
     for (let row = 1; row <= 5; row++) {
       this.hit_sheet[row - 1] = []
       for (let col = 1; col <= 5; col++) {
         const selected_number = this.getRundomNumber()
-        this.removeNumber(selected_number)
 
         $(`[data-row=${row}][data-col=${col}]`).text(selected_number).attr('data-value', selected_number)
         this.hit_sheet[row - 1][col - 1] = 0
@@ -82,7 +85,6 @@ class Bingo {
   dice = () => {
     this.cur_count++
     const selected_number = this.getRundomNumber()
-    this.removeNumber(selected_number)
 
     // hit チェック
     const $diced_elem = $(`[data-value=${selected_number}]`)
@@ -169,7 +171,7 @@ class Bingo {
 
   }
 
-  setDicedNumbers = (num) => {
+  setDicedNumbers = () => {
     $('#diced_numbers').text(this.selected_numbers.join(','))
   }
 
@@ -247,7 +249,9 @@ class Bingo {
    * @returns number
    */
   getRundomNumber = () => {
-    return this.unselected_numbers[Math.floor(Math.random() * this.unselected_numbers.length)]
+    const selected_number = this.unselected_numbers[Math.floor(Math.random() * this.unselected_numbers.length)]
+    this.removeNumber(selected_number)
+    return selected_number
   }
 
   /**
