@@ -71,7 +71,7 @@ class Bingo {
     for (let row = 1; row <= 5; row++) {
       this.hit_sheet[row - 1] = []
       for (let col = 1; col <= 5; col++) {
-        const selected_number = this.getRundomNumber()
+        const selected_number = this.getRandomNumber()
 
         $(`[data-row=${row}][data-col=${col}]`).text(selected_number).attr('data-value', selected_number)
         this.hit_sheet[row - 1][col - 1] = 0
@@ -84,7 +84,7 @@ class Bingo {
 
   dice = () => {
     this.cur_count++
-    const selected_number = this.getRundomNumber()
+    const selected_number = this.getRandomNumber()
 
     // hit チェック
     const $diced_elem = $(`[data-value=${selected_number}]`)
@@ -183,7 +183,7 @@ class Bingo {
    * 乱数の取得
    * @returns number
    */
-  getRundomNumber = () => {
+  getRandomNumber = () => {
     const selected_number = this.unselected_numbers[Math.floor(Math.random() * this.unselected_numbers.length)]
     this.removeNumber(selected_number)
     return selected_number
