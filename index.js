@@ -205,7 +205,11 @@ class Bingo {
    * @returns number
    */
   countLineSum = (judgeline) => {
+
     let judged_count = 0
+    let upper_left_count = 0
+    let upper_right_count = 0
+
     for (let row = 0; row < 5; row++) {
       // 行
       const row_total = this.hit_sheet[row].reduce((sum, element) => {
@@ -225,12 +229,10 @@ class Bingo {
       }
 
       // 斜め
-      let upper_left_count = 0
       upper_left_count += this.hit_sheet[row][row]
       if (upper_left_count === judgeline) {
         judged_count++
       }
-      let upper_right_count = 0
       upper_right_count += this.hit_sheet[row][4 - row]
       if (upper_right_count === judgeline) {
         judged_count++
